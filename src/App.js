@@ -29,9 +29,9 @@ class App extends Component {
     await this.setState({ points });
   }
 
-  async resetGame() {
+  async resetGame(win) {
     await this.setState({ reset: true });
-    await this.awardPoints();
+    if (win) await this.awardPoints();
     await setTimeout(() => {
       this.setState({ 
         board: [
@@ -51,12 +51,14 @@ class App extends Component {
     board[index] = turn;
     await this.setState({ board });
     win(board) ? 
-    await this.resetGame() :
+    await this.resetGame(true) :
     await this.changeTurn();
+    if (!board.includes(null)) await this.resetGame(false);
   }
   render() {
     return (
       <div className="App">
+        <h1>TICTACTOE</h1>
         <Board board={this.state.board} update={this.updateBoard}/>
       </div>
     );
