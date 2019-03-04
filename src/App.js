@@ -13,14 +13,19 @@ class App extends Component {
       ],
       turn: 'X'
     }
+    this.changeTurn = this.changeTurn.bind(this);
     this.updateBoard = this.updateBoard.bind(this);
   }
-  updateBoard(index) {
+  changeTurn = () => this.state.turn === 'X' ? this.setState({ turn: 'O' }) : this.setState({ turn: 'X' });
+
+  updateBoard = index => {
     let { board, turn } = this.state;
+    if (board[index]) return;
     board[index] = turn;
     this.setState({ board });
+    this.changeTurn();
   }
-  render() {
+  render = () => {
     return (
       <div className="App">
         <Board board={this.state.board} update={this.updateBoard}/>
