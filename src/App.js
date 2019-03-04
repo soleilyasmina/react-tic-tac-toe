@@ -15,7 +15,8 @@ class App extends Component {
       ],
       turn: 'X',
       points: [0,0],
-      reset: false
+      reset: false,
+      title: 'tictactoe'
     }
     this.changeTurn = this.changeTurn.bind(this);
     this.resetGame = this.resetGame.bind(this);
@@ -23,16 +24,17 @@ class App extends Component {
   }
 
   changeTurn = async () => await this.state.turn === 'X' ? this.setState({ turn: 'O' }) : this.setState({ turn: 'X' });
-
+  
   async awardPoints() {
     let { points, turn } = await this.state;
     turn === 'X' ? points[0] += 1 : points[1] += 1;
-    await this.setState({ points });
+    await this.setState({ points, title: `${turn} wins!`});
   }
 
   async resetGame(win) {
     await this.setState({ reset: true });
     if (win) await this.awardPoints();
+    else await this.setState({ title: "it's a tie!" });
     await setTimeout(() => {
       this.setState({ 
         board: [
@@ -41,7 +43,8 @@ class App extends Component {
           null, null, null
         ],
         turn: 'X',
-        reset: false
+        reset: false,
+        title: 'tictactoe'
       });
     }, 1500);
   }
@@ -59,7 +62,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>TICTACTOE</h1>
+        <h1>{ this.state.title }</h1>
         <Board board={this.state.board} update={this.updateBoard} />
         <Points x={this.state.points[0]} o={this.state.points[1]} />
       </div>
