@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Board from './components/Board';
+import Points from './components/Points';
 import win from './services/winconditions';
 
 class App extends Component {
@@ -59,7 +60,8 @@ class App extends Component {
     return (
       <div className="App">
         <h1>TICTACTOE</h1>
-        <Board board={this.state.board} update={this.updateBoard}/>
+        <Board board={this.state.board} update={this.updateBoard} />
+        <Points x={this.state.points[0]} o={this.state.points[1]} />
       </div>
     );
   }
